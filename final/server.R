@@ -4,6 +4,8 @@ library(tidyverse)
 library(shinydashboard)
 library(teal.data)
 library(teal.modules.clinical)
+library(nestcolor)
+
 # path <- system.file("AE", "/Users/zhiyi/Documents/rshiny_tutorial/final/data/AE.sas7bdat", package = "haven")
 # read_sas(path)
 # adamdir <- list.files("/Users/zhiyi/Documents/rshiny_tutorial/final/data", pattern = "*.sas7bdat$", full.names = T)
@@ -17,7 +19,7 @@ adae <- tmc_ex_adae
 
 
 server <- function(input, output) {
-  
+
   data <- adae
   data1 <-reactive({
     
@@ -127,6 +129,8 @@ server <- function(input, output) {
     ggplot(data1(), aes(y = data1()$AEDECOD, fill = data1()$AETOXGR)) + 
       geom_bar(stat = "count", position = 'stack')
   })
+  
+  output$AETS <- DT::renderDataTable({data1()})
   
 }
 
